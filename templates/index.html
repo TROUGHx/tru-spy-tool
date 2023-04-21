@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>Tru Spytool</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+    <body>
+        <input type="text" placeholder="Sito" id="nome_Sito"><button id="get_report">Get report</button>
+        <br>
+        <div id="req_status"></div>
+            <table class="styled-table" hidden id="tabella">
+                <thead>
+                    <tr>
+                        <th>ID Prodotto</th>
+                        <th>Prodotto</th>
+                        <th>Store ID</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody >
+
+                    <tr class="active-row">
+                        <td>Total sales</td>
+                        <td id="totalSales"></td>
+                        <td></td>
+                    </tr>
+                    <!-- and so on... -->
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            document.getElementById("get_report").addEventListener("click", function() {
+                document.getElementById("tabella").hidden = false
+                var tableHeaderRowCount = 2;
+            var table = document.getElementById('tabella');
+            var rowCount = table.rows.length;
+            for (var i = tableHeaderRowCount; i < rowCount; i++) {
+                table.deleteRow(tableHeaderRowCount);
+            }
+                fetch("https://web-production-4e53.up.railway.app/report/"+document.getElementById("nome_Sito").value)
+                .then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    console.log(data)
+
+                    if(data.length >=1){
+                        function generateTable(table, data) {
+                        let venditeN = 0
+                        for (let element of data) {
+                            venditeN = venditeN+1
+                            let row = table.insertRow();
+                            for (key in element) {
+                            
+                            let cell = row.insertCell();
+                            let text = document.createTextNode(element[key]);
+                            cell.appendChild(text);
+                            }
+                        }
+
+                        document.getElementById("totalSales").innerText = venditeN
+                        }
+
+                        let table = document.querySelector("table");
+                        let data2 = Object.keys(data[0]);
+                        //dsadsa
+                        generateTable(table, data);
+
+                    }else{
+                        document.getElementById('req_status').innerHTML = "<b><font color=red>SITO NON TROVATO</font></b>"
+                    }
+
+
+
+
+                })
+
+                
+
+            })
+
+        
+
+
+
+        </script>
+
+    </body>
+</html>
