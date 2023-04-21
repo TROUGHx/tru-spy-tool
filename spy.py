@@ -52,7 +52,7 @@ while True:
                     print("New Sale for Product: "+Fore.GREEN+prod_name+Style.RESET_ALL+" "+oraAttuale())
                     product_change[prod_id] = data
 
-                    with open('sales.csv', 'a', newline='', encoding='utf-8') as f:
+                    with open('static/csv/sales.csv', 'a', newline='', encoding='utf-8') as f:
                         writer = csv.writer(f)
                         data = [store,prod_id, prod_name, oraAttuale()]
                         writer.writerow(data)

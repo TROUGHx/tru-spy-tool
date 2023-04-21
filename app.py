@@ -54,7 +54,7 @@ def removesite(name):
 def report(sito):
 	report_print = []
 
-	with open ("sales.csv") as f:
+	with open ("static/csv/sales.csv") as f:
 		csv_reader = csv.DictReader(f)
 
 		for row in csv_reader:
