@@ -37,7 +37,7 @@
             for (var i = tableHeaderRowCount; i < rowCount; i++) {
                 table.deleteRow(tableHeaderRowCount);
             }
-                fetch("https://web-production-98af.up.railway.app/"+document.getElementById("nome_Sito").value)
+                fetch("https://web-production-98af.up.railway.app/report/"+document.getElementById("nome_Sito").value)
                 .then((response) => {
                     return response.json();
                 }).then((data) => {
