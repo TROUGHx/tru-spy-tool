@@ -26,7 +26,7 @@ def oraAttuale():
     return datetime.datetime.strftime(datetime.datetime.now(), "%d/%m/%Y, %H:%M:%S")
 
 while True:
-    with open ("storex.txt") as f:
+    with open ("statis/file/storex.txt") as f:
         stores = f.readlines()
         for s in stores:
             try:

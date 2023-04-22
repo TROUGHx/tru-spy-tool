@@ -21,7 +21,7 @@ def addsite(name):
 
 	sitiFile = []
 
-	with open("statis/file/storex.txt", "r") as f:
+	with open("static/file/storex.txt", "r") as f:
 		righe = f.readlines()
 		for l in righe:
 			sitiFile.append(l)
