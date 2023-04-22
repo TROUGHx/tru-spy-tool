@@ -2,6 +2,8 @@ import requests
 import json
 import datetime
 import csv
+import mysql.connector
+from mysql.connector import errorcode
 import time
 from colorama import Fore, Style, init
 
@@ -45,17 +47,44 @@ while True:
                 prod_id = p['id']
                 store = s.replace("\n", "")
                 prod_name = p['title']
-                ora = datetime.datetime.strftime(date_time_obj, "%d/%m/%Y, %H:%M:%S")
+                ora = datetime.datetime.strftime(date_time_obj, "%Y/%m/%d %H:%M:%S")
                 # print(Fore.BLUE+"Product: "+Style.RESET_ALL+prod_name+Fore.BLUE+" Last Sale: "+Style.RESET_ALL+ora)
                 
                 if(prod_id in product_change and product_change[prod_id] != data):
                     print("New Sale for Product: "+Fore.GREEN+prod_name+Style.RESET_ALL+" "+oraAttuale())
                     product_change[prod_id] = data
 
-                    with open('static/csv/sales.csv', 'a', newline='', encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        data = [store,prod_id, prod_name, oraAttuale()]
-                        writer.writerow(data)
+                    try:
+                        conn = mysql.connector.connect(
+                        host="db4free.net",
+                        user="truspytool",
+                        port="3306",
+                        password="Trucepro123.",
+                        database="truspytool",
+                        auth_plugin='mysql_native_password'
+                        )
+
+                        if(conn.is_connected()):
+
+                            mycursor = conn.cursor()
+                            sql = "INSERT INTO sales (store_name, prod_name, prod_id, sale_time) VALUES (%s, %s, %s, %s)"
+                            val = (store, prod_name, prod_id, ora)
+                            mycursor.execute(sql,val)
+                            conn.commit()
+
+
+                    except mysql.connector.Error as err:
+                        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                            print("something is wrong with your username or  password")
+
+                        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                            print("database does not exist")
+                        
+                        else:
+                            print(err)
+                    else:
+                        conn.close()
+
                 else:
                     product_change[prod_id] = data
 
