@@ -16,11 +16,11 @@ try:
         print("Connesso!")
 
         mycursor = conn.cursor()
-        mySql_insert_query = """INSERT INTO sales (store_name, prod_name, prod_id, sale_time) 
-                                VALUES 
-                                ('cinqo', 'zattera', 54546565, '2023-04-22 01:58:33') """
-        mycursor.execute(mySql_insert_query)
-        conn.commit()
+        mycursor.execute("SELECT * FROM sales")
+        myresult = mycursor.fetchall()
+
+        for x in myresult:
+            print(x)
 
 
 except mysql.connector.Error as err:
