@@ -89,7 +89,7 @@ def report(sito):
 						"Time": time
 					}
 
-				report_print.append(report_json)
+					report_print.append(report_json)
 
 		return jsonify(report_print)
 
