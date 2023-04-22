@@ -27,7 +27,7 @@ def addsite(name):
 			sitiFile.append(l)
 		
 		if(name not in sitiFile):
-			with open ("storex.txt", 'a') as f:
+			with open ("static/file/storex.txt", 'a') as f:
 				f.write('\n')
 				f.write(str(name))
 				return "added: "+str(name)
