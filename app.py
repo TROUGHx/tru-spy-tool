@@ -21,7 +21,7 @@ def addsite(name):
 
 	sitiFile = []
 
-	with open("storex.txt", "r") as f:
+	with open("statis/file/storex.txt", "r") as f:
 		righe = f.readlines()
 		for l in righe:
 			sitiFile.append(l)
@@ -39,7 +39,7 @@ def removesite(name):
 
 	sitiFile = []
 
-	with open("storex.txt", "r+") as f:
+	with open("/static/file/storex.txt", "r+") as f:
 		righe = f.readlines()
 		for l in righe:
 			if(l == name):
@@ -68,7 +68,6 @@ def report(sito):
 		)
 
 		if(conn.is_connected()):
-			print("Connesso!")
 
 			mycursor = conn.cursor()
 			mycursor.execute("SELECT * FROM sales")
